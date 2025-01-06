@@ -12,6 +12,7 @@ let deletedItems = 0;
 
 let ids = [];
 
+// a producer thread
 const insertItems = async () => {
   if (insertedItems >= maxItems) {
     return;
@@ -27,7 +28,9 @@ const insertItems = async () => {
 
   setTimeout(insertItems, 100);
 };
+setImmediate(insertItems);
 
+// a consumer thread
 const deleteItems = async () => {
   if (deletedItems >= maxItems) {
     return;
@@ -45,9 +48,9 @@ const deleteItems = async () => {
   setTimeout(deleteItems, 100);
 };
 
-setImmediate(insertItems);
 setImmediate(deleteItems);
 
+// wait for both threads to finish processing before exiting the script
 await new Promise((res) => {
   const check = () => {
     if (insertedItems >= maxItems && deletedItems >= maxItems) {
@@ -60,6 +63,7 @@ await new Promise((res) => {
   setImmediate(check);
 });
 
+// helper to generate an item
 function generateItem() {
   const id = randomBytes(4).toString("hex");
   const type = (Math.random() * 12) | 0;

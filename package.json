@@ -1,0 +1,8 @@
+{
+  "name": "test_lmdb",
+  "packageManager": "yarn@4.5.2",
+  "dependencies": {
+    "lmdb": "^3.2.2",
+    "typescript": "^5.7.2"
+  }
+}
